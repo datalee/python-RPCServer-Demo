@@ -1,0 +1,31 @@
+python 2.7(备注3.x的包名变了)
+
+1.服务端
+from SimpleXMLRPCServer import SimpleXMLRPCServer
+
+#定义要被调用的函数
+def sort_points(nodes):
+    exam_mat = dist_calc(nodes)
+    run = gen_alg(exam_mat,0,len(nodes)-1,pop_num=300,init_time=20,p_cros=0.6,p_vari=0.4,p_best=0.2)
+    best_pop = run.gen_alg()
+    return best_pop
+
+#主函数设定ip和端口和函数名
+if __name__ == '__main__':
+    '''    
+    nodes = [(34.7879510000,113.6986490000),(34.7751300000,113.6510700000),(34.7712600000,113.6511300000),(34.7544000000,113.6663800000),(34.7266162022,113.6272573134)]
+    #print sort_points(nodes)
+    x = sort_points(nodes)
+    print type(x),x
+    '''     
+    s=SimpleXMLRPCServer(('0.0.0.0',2222))
+    s.register_function(sort_points,"get_sort")
+    s.serve_forever()
+    
+    
+2.客户端
+from xmlrpclib import ServerProxy
+s = ServerProxy("http://192.168.x.xx:2222")
+nodes = [(34.787951,113.6986490000),(34.7751300000,113.6510700000),
+         (34.7712600000,113.6511300000),(34.7544000000,113.6663800000),(34.7266162022,113.6272573134)]
+s.get_sort(nodes)
