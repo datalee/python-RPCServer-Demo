@@ -2,7 +2,7 @@ python 2.7(备注3.x的包名变了)
 
 1.服务端
 from SimpleXMLRPCServer import SimpleXMLRPCServer
-
+(from xmlrpc.server import SimpleXMLRPCServer)---3.x
 #定义要被调用的函数
 def sort_points(nodes):
     exam_mat = dist_calc(nodes)
@@ -25,6 +25,7 @@ if __name__ == '__main__':
     
 2.客户端
 from xmlrpclib import ServerProxy
+(from xmlrpc.client import ServerProxy)---3.x
 s = ServerProxy("http://192.168.x.xx:2222")
 nodes = [(34.787951,113.6986490000),(34.7751300000,113.6510700000),
          (34.7712600000,113.6511300000),(34.7544000000,113.6663800000),(34.7266162022,113.6272573134)]
